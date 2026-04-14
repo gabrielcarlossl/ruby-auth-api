@@ -1,24 +1,57 @@
-# README
+# Ruby Auth API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Visão Geral
 
-Things you may want to cover:
+Este projeto é uma API de autenticação desenvolvida com Ruby on Rails (modo API), focada em fornecer endpoints para cadastro, login e consulta de perfil de usuários. A autenticação é feita via JWT (JSON Web Token), permitindo que clientes web ou mobile autentiquem e acessem rotas protegidas sem necessidade de sessão no servidor.
 
-* Ruby version
+### Principais Funcionalidades
+- Cadastro de usuário (`POST /api/v1/signup`)
+- Login com e-mail e senha, retornando um token JWT (`POST /api/v1/login`)
+- Consulta de perfil autenticado, protegida por token (`GET /api/v1/me`)
 
-* System dependencies
+### Tecnologias e Padrões
+- **Ruby on Rails** (API mode)
+- **JWT** para autenticação stateless
+- **bcrypt** para criptografia de senhas
+- **PostgreSQL** como banco de dados padrão
+- **RSpec**, **FactoryBot** e **Shoulda Matchers** para testes automatizados
+- Estrutura de controllers versionada (`api/v1`), facilitando evolução da API
 
-* Configuration
+### Estrutura do Projeto
+- `app/models/user.rb`: modelo do usuário, com validações e autenticação segura
+- `app/controllers/api/v1/users_controller.rb`: cadastro e perfil
+- `app/controllers/api/v1/auth_controller.rb`: login
+- `app/services/jwt_service.rb`: geração e validação de tokens JWT
+- `spec/`: testes automatizados
 
-* Database creation
+### Exemplos de Uso
+**Cadastro:**
+```http
+POST /api/v1/signup
+{
+	"user": {
+		"full_name": "Nome Exemplo",
+		"email": "email@exemplo.com",
+		"password": "senha123",
+		"password_confirmation": "senha123"
+	}
+}
+```
 
-* Database initialization
+**Login:**
+```http
+POST /api/v1/login
+{
+	"email": "email@exemplo.com",
+	"password": "senha123"
+}
+```
 
-* How to run the test suite
+**Perfil (rota protegida):**
+```http
+GET /api/v1/me
+Authorization: Bearer <seu_token_jwt>
+```
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+---
+Consulte o arquivo RUBY_ESTUDO.md para um guia detalhado de implementação, testes e convenções adotadas.
