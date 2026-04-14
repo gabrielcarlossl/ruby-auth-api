@@ -54,4 +54,57 @@ Authorization: Bearer <seu_token_jwt>
 ```
 
 ---
+
+## Como Rodar o Projeto
+
+### Pré-requisitos
+
+- Ruby 3.2.2 (recomendado via [rbenv](https://github.com/rbenv/rbenv))
+- PostgreSQL em execução localmente
+- Bundler (`gem install bundler`)
+
+### 1. Instalar dependências
+
+```bash
+bundle install
+```
+
+### 2. Configurar variáveis de ambiente
+
+O banco usa as variáveis `DB_USERNAME` e `DB_PASSWORD` (padrão: `postgres`/`postgres`). Para sobrescrever, exporte antes de rodar:
+
+```bash
+export DB_USERNAME=seu_usuario
+export DB_PASSWORD=sua_senha
+```
+
+### 3. Criar e migrar o banco de dados
+
+```bash
+rails db:create
+rails db:migrate
+```
+
+### 4. Iniciar o servidor
+
+```bash
+rails server
+```
+
+A API estará disponível em `http://localhost:3000`.
+
+### 5. Rodar os testes
+
+```bash
+bundle exec rspec
+```
+
+### Docker (opcional)
+
+```bash
+docker build -t ruby_auth_api .
+docker run -d -p 80:80 -e RAILS_MASTER_KEY=<valor de config/master.key> --name ruby_auth_api ruby_auth_api
+```
+
+---
 Consulte o arquivo RUBY_ESTUDO.md para um guia detalhado de implementação, testes e convenções adotadas.
